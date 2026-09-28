@@ -1,0 +1,27 @@
+CERT-IN CYBER SECURITY ADVISORY (CI-2026-0928)
+Severity Rating: CRITICAL
+Subject: Active Exploitation of Remote Code Execution Vulnerability (CVE-2026-4419) in Enterprise Perimeter Gateways
+
+Overview:
+The Indian Computer Emergency Response Team (CERT-In) has observed targeted, active exploitation of a zero-day remote code execution vulnerability designated CVE-2026-4419 affecting Enterprise Perimeter Gateways running firmware versions prior to v5.8.2.
+
+Technical Details:
+The vulnerability exists due to improper input sanitization in the session initiation management protocol daemon (simpd) listening on UDP port 8443. An unauthenticated remote threat actor can send crafted multi-part packets containing malicious binary payloads to trigger heap buffer exhaustion, leading to arbitrary code execution with root privileges. Once code execution is established, the adversary establishes an encrypted reverse shell to C2 infrastructure, dumps active credential caches, and deploys the 'ShadowVault' ransomware variant across lateral subnet segments.
+
+Affected Systems:
+- SecureGate Enterprise Appliance 4000/6000 series running firmware 4.2.0 through 5.8.1
+- CloudEdge Virtual Concentrators deployed on AWS, Azure, and Google Cloud environments with exposed public admin interfaces
+
+Indicators of Compromise (IOCs):
+- Malicious IPs: 198.51.100.42, 203.0.113.88, 185.220.101.5
+- Suspicious Domain: update-gateways-cloud.org
+- SHA-256 Hashes:
+  * e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 (loader.bin)
+  * a8f5f167f44f4964e6c998dee827110c008f86f7ef57e3f898a39a7791656b82 (payload.so)
+
+Remediation & Action Required:
+1. Immediate Patching: Apply vendor firmware emergency patch v5.8.2 released on 27-09-2026.
+2. Perimeter Hardening: Block external access to management port UDP 8443 at upstream firewall perimeter immediately. Ensure gateway admin interfaces are accessible only through dedicated out-of-band management VPNs.
+3. Credential Invalidation: Revoke all administrative session tokens, rotate gateway API master keys, and force password resets for all privileged accounts.
+4. Threat Hunting: Inspect gateway authorization logs for anomalous sessions originating from unfamiliar external IP addresses during the last 14 days. Look for unexpected child processes spawned by simpd.
+5. Reporting: Entities operating critical national infrastructure (CNI) must report incident detections to CERT-In within 6 hours as mandated under cybersecurity directives.

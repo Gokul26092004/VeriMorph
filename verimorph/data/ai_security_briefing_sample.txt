@@ -1,0 +1,16 @@
+NATIONAL CYBER DEFENCE STRATEGY REPORT (NCDS-2026-AI)
+Classification: CONFIDENTIAL // OPERATIONAL RESTRICTED
+Topic: Emerging Threat Vector: Poisoned Weights & Indirect Prompt Injection in Autonomous Decision Systems
+
+Executive Overview:
+A multi-agency forensic evaluation has identified organized attempts by state-sponsored advanced persistent threat (APT) groups to compromise national infrastructure decision pipelines through indirect prompt injection and fine-tuning weight poisoning. 
+
+Critical Findings:
+1. Supply-chain Poisoning: Unverified open-weight models uploaded to public repositories were discovered containing trojanized attention mechanisms that trigger specific bypass behavior when provided predetermined canary token triggers.
+2. Sensor Stream Injections: Autonomous energy grid optimization agents parsing incoming weather reports and market telemetry were shown vulnerable to adversarial ASCII perturbations that skewed load-balancing thresholds by up to 34%.
+3. Model Extraction Attacks: Continuous high-frequency querying against defense sector LLM endpoints extracted proprietary operational boundary constraints without triggering traditional volumetric rate limits.
+
+Operational Mandates:
+- All autonomous defense and power infrastructure systems must transition to air-gapped, cryptographically verified local model deployments.
+- Continuous multi-layer semantic validation must be enforced on all unstructured input data prior to ingestion by reasoning agents.
+- Cryptographic hash-chaining of all model checkpoints, training data digests, and inference inputs/outputs must be logged to an immutable ledger for post-incident attribution.

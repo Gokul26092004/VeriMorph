@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VeriMorph - Gen AI Platform for Automated, Auditable Content Transformation</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header>
+    <div class="logo-container">
+      <div class="logo-badge">🛡️</div>
+      <div class="title-group">
+        <h1>VeriMorph AI</h1>
+        <p>Gen AI Platform for Automated, Auditable Content Transformation from a Single Source</p>
+      </div>
+    </div>
+    <div class="header-meta">
+      <div class="sih-tag">SIH 2026 • PS 26154 • Team 171612 (Tech stack)</div>
+      <div class="ledger-pill" id="ledgerStatusPill">
+        <span class="pulse-dot"></span>
+        <span id="ledgerStatusText">Ledger: Initialized</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- App Body Layout -->
+  <div class="app-container">
+    
+    <!-- Left Column: Operator Controls -->
+    <div class="control-panel">
+      <div class="panel-header">
+        <span>⚙️</span> Operator Control Center
+      </div>
+
+      <div class="form-group">
+        <label>1. Source Document Input</label>
+        <div class="sample-selector">
+          <button class="btn-sample" onclick="loadSample('cert_in_advisory')">🚨 CERT-In Advisory</button>
+          <button class="btn-sample" onclick="loadSample('disaster_management')">🌀 Cyclone Alert</button>
+          <button class="btn-sample" onclick="loadSample('ai_security_briefing')">🧠 AI Intel Report</button>
+        </div>
+        <textarea id="sourceText" placeholder="Paste source report, technical advisory, threat intelligence document, or article text here..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Optional Web URL Ingestion</label>
+        <input type="text" id="sourceUrl" placeholder="https://example.com/advisory-report">
+      </div>
+
+      <div class="form-group">
+        <label>Target Audience</label>
+        <select id="selAudience">
+          <option value="Technical Specialists & Cyber Cells">Technical Specialists & Cyber Cells</option>
+          <option value="Executives & Decision Makers (C-Level)">Executives & Decision Makers (C-Level)</option>
+          <option value="General Public & Citizens">General Public & Citizens</option>
+          <option value="Incident Responders & Field Teams">Incident Responders & Field Teams</option>
+          <option value="Media & Public Relations">Media & Public Relations</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Communication Tone</label>
+        <select id="selTone">
+          <option value="Urgent & Alert">Urgent & Alert</option>
+          <option value="Professional & Authoritative">Professional & Authoritative</option>
+          <option value="Accessible & Educational">Accessible & Educational</option>
+          <option value="Neutral & Objective">Neutral & Objective</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Output Language</label>
+        <select id="selLanguage">
+          <option value="English">English</option>
+          <option value="Hindi">Hindi (हिंदी)</option>
+          <option value="Tamil">Tamil (தமிழ்)</option>
+          <option value="Telugu">Telugu (తెలుగు)</option>
+          <option value="Marathi">Marathi (मराठी)</option>
+          <option value="Bengali">Bengali (বাংলা)</option>
+          <option value="Gujarati">Gujarati (ગુજરાતી)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Detail Level</label>
+        <select id="selDetail">
+          <option value="Standard">Standard</option>
+          <option value="Executive (Concise)">Executive (Concise)</option>
+          <option value="Comprehensive (Deep-Dive)">Comprehensive (Deep-Dive)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Deliverable Formats (7 Channels)</label>
+        <div class="formats-grid">
+          <label class="checkbox-label"><input type="checkbox" id="fmt_video_package" checked> 🎬 Video Package</label>
+          <label class="checkbox-label"><input type="checkbox" id="fmt_linkedin_post" checked> 💼 LinkedIn Post</label>
+          <label class="checkbox-label"><input type="checkbox" id="fmt_twitter_thread" checked> 🐦 X Thread</label>
+          <label class="checkbox-label"><input type="checkbox" id="fmt_advisory" checked> 🛡️ Advisory</label>
+          <label class="checkbox-label"><input type="checkbox" id="fmt_infographic" checked> 📊 Infographic</label>
+          <label class="checkbox-label"><input type="checkbox" id="fmt_executive_summary" checked> 📋 Exec Summary</label>
+          <label class="checkbox-label"><input type="checkbox" id="fmt_presentation_deck" checked> 🖥️ Presentation</label>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="btnTransform" onclick="triggerTransformation()">
+        <span>⚡</span> Transform & Verify on Blockchain
+      </button>
+    </div>
+
+    <!-- Right Column: Results & Verification Center -->
+    <div class="results-panel">
+      
+      <!-- Tabs Navigation -->
+      <div class="tabs-nav">
+        <button class="tab-btn active" onclick="switchTab('tab-brief')">📝 Content Brief</button>
+        <button class="tab-btn" onclick="switchTab('tab-advisory')">🛡️ Advisory</button>
+        <button class="tab-btn" onclick="switchTab('tab-video')">🎬 Video Package</button>
+        <button class="tab-btn" onclick="switchTab('tab-linkedin')">💼 LinkedIn Post</button>
+        <button class="tab-btn" onclick="switchTab('tab-twitter')">🐦 X Thread</button>
+        <button class="tab-btn" onclick="switchTab('tab-infographic')">📊 Infographic</button>
+        <button class="tab-btn" onclick="switchTab('tab-executive')">📋 Exec Summary</button>
+        <button class="tab-btn" onclick="switchTab('tab-presentation')">🖥️ Presentation</button>
+        <button class="tab-btn" onclick="switchTab('tab-verifier')">🔍 Claim Verifier</button>
+        <button class="tab-btn" onclick="switchTab('tab-ledger')">⛓️ Blockchain Ledger</button>
+      </div>
+
+      <!-- Tab 1: Content Brief -->
+      <div class="tab-content active" id="tab-brief">
+        <div class="output-card">
+          <div class="output-header">
+            <h3>Unified Content Brief ("Analyze Once")</h3>
+            <span class="badge-verified" id="briefIdBadge">BRIEF-READY</span>
+          </div>
+          <p id="briefSummary" style="color: #cbd5e1; margin-bottom: 1rem; font-size: 0.9rem;">Submit source content to generate the structured facts, entities, and actions that anchor all 7 formats.</p>
+          
+          <div id="briefContent">
+            <h4 style="color: #38bdf8; margin: 1rem 0 0.5rem 0; font-size: 0.9rem;">Ground Truth Facts (Cited to Source Chunks):</h4>
+            <div id="briefFactsList" style="font-size: 0.85rem; color: #94a3b8;">No analysis yet. Click 'CERT-In Advisory' sample to test.</div>
+
+            <h4 style="color: #ec4899; margin: 1.25rem 0 0.5rem 0; font-size: 0.9rem;">Extracted Entities & IOCs:</h4>
+            <div id="briefEntitiesList" style="display: flex; gap: 0.5rem; flex-wrap: wrap;"></div>
+
+            <h4 style="color: #10b981; margin: 1.25rem 0 0.5rem 0; font-size: 0.9rem;">Mandatory Action Items:</h4>
+            <div id="briefActionsList" style="font-size: 0.85rem; color: #94a3b8;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Advisory -->
+      <div class="tab-content" id="tab-advisory">
+        <div class="output-card">
+          <div class="output-header">
+            <h3>Official Security Advisory (CERT-In / CISA Format)</h3>
+            <div>
+              <button class="btn-action" onclick="copyContent('advisoryText')">📋 Copy</button>
+              <button class="btn-action" onclick="exportFile('advisory')">💾 Download DOCX</button>
+            </div>
+          </div>
+          <pre class="formatted-output" id="advisoryText">Advisory will be generated here...</pre>
+        </div>
+      </div>
+
+      <!-- Tab 3: Video Package -->
+      <div class="tab-content" id="tab-video">
+        <div class="output-card">
+          <div class="output-header">
+            <h3>Production-Ready Video Package</h3>
+            <div>
+              <button class="btn-action" onclick="exportFile('video_package')">💾 Download SRT Subtitles</button>
+            </div>
+          </div>
+          <div id="videoScenesContainer" class="scene-grid">
+            <p style="color: #64748b;">Video storyboard, visual cues, and subtitle cues will appear here...</p>
+          </div>
+          <h4 style="margin-top: 1.25rem; margin-bottom: 0.5rem; color: #38bdf8; font-size: 0.9rem;">Generated SRT Subtitles:</h4>
+          <pre class="formatted-output" id="videoSrtText" style="max-height: 200px;">SRT subtitles will appear here...</pre>
+        </div>
+      </div>
+
+      <!-- Tab 4: LinkedIn Post -->
+      <div class="tab-content" id="tab-linkedin">
+        <div class="output-card">
+          <div class="output-header">
+            <h3>Executive LinkedIn Post</h3>
+            <button class="btn-action" onclick="copyContent('linkedinText')">📋 Copy Post</button>
+          </div>
+          <pre class="formatted-output" id="linkedinText">LinkedIn post will be generated here...</pre>
+        </div>
+      </div>
+
+      <!-- Tab 5: X Thread -->
+      <div class="tab-content" id="tab-twitter">
+        <div class="output-card">
+          <div class="output-header">
+            <h3>Numbered X (Twitter) Thread</h3>
+            <button class="btn-action" onclick="copyContent('twitterText')">📋 Copy Thread</button>
+          </div>
+          <pre class="formatted-output" id="twitterText">X thread will be generated here...</pre>
+        </div>
+      </div>
+
+      <!-- Tab 6: Infographic -->
+      <div class="tab-content" id="tab-infographic">
+        <div class="output-card">
+          <div class="output-header">
+            <h3>Infographic Specification & SVG Visualization</h3>
+            <button class="btn-action" onclick="downloadSvg()">💾 Download SVG</button>
+          </div>
+          <div id="svgContainer" style="width: 100%; border-radius: 8px; overflow: hidden; border: 1px solid #1e293b;">
+            <p style="padding: 2rem; color: #64748b; text-align: center;">Infographic SVG will render here...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 7: Executive Summary -->
+      <div class="tab-content" id="tab-executive">
+        <div class="output-card">
+          <div class="output-header">
+            <h3>Executive Decision Summary & BLUF</h3>
+            <div>
+              <button class="btn-action" onclick="copyContent('execSummaryText')">📋 Copy</button>
+              <button class="btn-action" onclick="exportFile('executive_summary')">💾 Download DOCX</button>
+            </div>
+          </div>
+          <pre class="formatted-output" id="execSummaryText">Executive summary will be generated here...</pre>
+        </div>
+      </div>
+
+      <!-- Tab 8: Presentation Deck -->
+      <div class="tab-content" id="tab-presentation">
+        <div class="output-card">
+          <div class="output-header">
+            <h3>Presentation Deck & Speaker Notes</h3>
+            <button class="btn-action" onclick="exportFile('presentation_deck')">💾 Download PPTX</button>
+          </div>
+          <div id="presentationSlidesContainer">
+            <p style="color: #64748b;">Presentation slides and presenter scripts will appear here...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 9: Claim Verifier -->
+      <div class="tab-content" id="tab-verifier">
+        <div class="output-card">
+          <div class="output-header">
+            <h3>Grounded Claim Verifier (Hallucination Defense)</h3>
+            <span class="badge-verified" id="overallAuditBadge">STATUS: AUDITED</span>
+          </div>
+
+          <div class="verifier-score-box">
+            <div class="score-circle" id="verifierScoreCircle">--%</div>
+            <div>
+              <h4 style="color: #f8fafc; font-size: 1rem; margin-bottom: 0.2rem;">Factual Groundedness Index</h4>
+              <p style="font-size: 0.8rem; color: #94a3b8;">
+                Every claim generated across all 7 formats is cross-referenced against original source passages. 
+                Claims without source support are flagged for operator intervention.
+              </p>
+              <div id="verifierBreakdown" style="margin-top: 0.5rem; font-size: 0.8rem; color: #cbd5e1;"></div>
+            </div>
+          </div>
+
+          <h4 style="color: #38bdf8; margin-bottom: 0.75rem; font-size: 0.9rem;">Claim Auditing Telemetry:</h4>
+          <div id="claimsListContainer">
+            <p style="color: #64748b;">Submit content to trigger real-time claim grounding checks...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 10: Blockchain Provenance Ledger -->
+      <div class="tab-content" id="tab-ledger">
+        <div class="output-card">
+          <div class="output-header">
+            <h3>Cryptographic Provenance Ledger (Hyperledger Fabric Architecture)</h3>
+            <div>
+              <button class="btn-action" onclick="verifyLedgerIntegrity()">🛡️ Verify Ledger Integrity</button>
+              <button class="btn-action" onclick="downloadAuditCertificate()">📜 Download Provenance Certificate</button>
+            </div>
+          </div>
+          <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 1rem;">
+            Each transformation event hashes source document, Content Brief, operator settings, generated outputs, 
+            and verification results into a Merkle tree and binds it to a SHA-256 hash-chained block.
+          </p>
+          <div id="ledgerBlocksContainer" class="chain-container">
+            <p style="color: #64748b;">Loading blockchain blocks...</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
