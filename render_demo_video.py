@@ -1,16 +1,17 @@
 import os
 import sys
+import wave
+import subprocess
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 import imageio
+import imageio_ffmpeg
 
 if sys.platform == "win32" and hasattr(sys.stdout, "buffer"):
     import io
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 
-
 def get_font(size: int, bold: bool = False):
-    """Try to load a nice Windows TrueType font, falling back to default."""
     candidates = [
         "C:\\Windows\\Fonts\\segoeui.ttf" if not bold else "C:\\Windows\\Fonts\\segoeuib.ttf",
         "C:\\Windows\\Fonts\\arial.ttf" if not bold else "C:\\Windows\\Fonts\\arialbd.ttf",
@@ -47,23 +48,21 @@ def create_scene_1(f_title, f_sub, f_body, f_hero, progress):
     draw = ImageDraw.Draw(img)
     draw_header(draw, "VERIMORPH AI PLATFORM", "Automated, Auditable Content Transformation from a Single Source", f_title, f_sub)
     
-    # Hero Title Box
-    draw.rectangle([(140, 160), (1140, 560)], fill=(22, 32, 50), outline=(56, 189, 248), width=2)
+    draw.rectangle([(140, 150), (1140, 570)], fill=(22, 32, 50), outline=(56, 189, 248), width=2)
+    draw.text((640, 200), "VeriMorph: Gen AI Platform", font=f_hero, fill=(255, 255, 255), anchor="mm")
+    draw.text((640, 250), "Automated & Cryptographically Auditable Content Transformation", font=f_title, fill=(56, 189, 248), anchor="mm")
     
-    draw.text((640, 210), "VeriMorph: Gen AI Platform", font=f_hero, fill=(255, 255, 255), anchor="mm")
-    draw.text((640, 260), "Automated & Cryptographically Auditable Content Transformation", font=f_title, fill=(56, 189, 248), anchor="mm")
-    
-    # Highlights
     bullets = [
         "🏆 Smart India Hackathon 2026 | Problem Statement ID: 26154",
         "🛡️ Theme: Blockchain & Cybersecurity | Category: Software",
         "👥 Team: Tech stack (Team ID: 171612)",
         "⚡ Single Source Ingest ──▶ 1 Content Brief ──▶ 7 Synchronized Multi-Channel Outputs",
-        "🔍 NIST-Aligned Claim Verifier (94.2% Grounded) | ⛓️ SHA-256 Provenance Ledger"
+        "🔍 NIST-Aligned Claim Verifier (94.2% Grounded) | ⛓️ SHA-256 Provenance Ledger",
+        "🎙️ Audio Narration: Active Voiceover Demonstration"
     ]
-    y = 330
+    y = 310
     for b in bullets:
-        draw.text((200, y), b, font=f_body, fill=(226, 232, 240))
+        draw.text((190, y), b, font=f_body, fill=(226, 232, 240))
         y += 40
 
     draw_footer(draw, "Scene 1: Introduction to VeriMorph Architecture (SIH 2026 - Problem Statement 26154)", f_sub, progress)
@@ -74,7 +73,6 @@ def create_scene_2(f_title, f_sub, f_body, progress):
     draw = ImageDraw.Draw(img)
     draw_header(draw, "STEP 1: INGESTION & CONTENT BRIEF ENGINE", "Single Source Understanding Without Hallucination Drift", f_title, f_sub)
     
-    # Left: Ingested source
     draw.rectangle([(40, 110), (580, 630)], fill=(17, 24, 39), outline=(39, 53, 73), width=1)
     draw.text((60, 130), "Raw Source: CERT-In Advisory (CI-2026-0928)", font=f_title, fill=(239, 68, 68))
     advisory_lines = [
@@ -95,7 +93,6 @@ def create_scene_2(f_title, f_sub, f_body, progress):
         draw.text((60, y), l, font=f_body, fill=color)
         y += 38
 
-    # Right: Content Brief Synthesis
     draw.rectangle([(620, 110), (1240, 630)], fill=(22, 32, 50), outline=(56, 189, 248), width=2)
     draw.text((640, 130), "Synthesized Content Brief (BRIEF-F8010A62A9F1)", font=f_title, fill=(56, 189, 248))
     
@@ -122,15 +119,13 @@ def create_scene_3(f_title, f_sub, f_body, progress):
     draw = ImageDraw.Draw(img)
     draw_header(draw, "STEP 2: 7 SYNCHRONIZED CHANNELS GENERATED", "Multi-Format Transformation from a Single Source", f_title, f_sub)
     
-    # 7 Cards Grid
     cards = [
         ("🎬 Video Package", "Storyboard, visual cues, script & millisecond .SRT subtitles", (139, 92, 246)),
         ("🛡️ Cyber Advisory", "CERT-In / CISA format with CVSS, IOCs, and remediation", (239, 68, 68)),
         ("💼 LinkedIn Post", "Executive hook, key operational takeaways, hashtags", (59, 130, 246)),
         ("🐦 X Thread", "1/6 to 6/6 numbered viral thread with punchy calls-to-action", (6, 182, 212)),
         ("📊 Infographic", "Structured layout quadrants, metrics & SVG visualizer", (245, 158, 11)),
-        ("📋 Executive Summary", "BLUF, 5x5 strategic risk scorecard & decision matrix", (16, 185, 129)),
-        ("🖥️ Presentation Deck", "6 widescreen slides with bullet points & speaker notes", (236, 72, 153))
+        ("📋 Executive Summary", "BLUF, 5x5 strategic risk scorecard & decision matrix", (16, 185, 129))
     ]
     
     coords = [
@@ -139,23 +134,21 @@ def create_scene_3(f_title, f_sub, f_body, progress):
         (840, 110, 1240, 240),
         (40, 260, 420, 390),
         (440, 260, 820, 390),
-        (840, 260, 1240, 390),
-        (40, 410, 630, 540)
+        (840, 260, 1240, 390)
     ]
     
-    for i, (title, desc, color) in enumerate(cards[:6]):
+    for i, (title, desc, color) in enumerate(cards):
         x1, y1, x2, y2 = coords[i]
         draw.rectangle([(x1, y1), (x2, y2)], fill=(22, 32, 50), outline=color, width=2)
         draw.text((x1 + 15, y1 + 15), title, font=f_title, fill=color)
         draw.text((x1 + 15, y1 + 55), desc, font=f_sub, fill=(203, 213, 225))
     
-    # Slide 7 card wider
+    # 7th channel: Deck
     x1, y1, x2, y2 = (40, 410, 1240, 540)
     draw.rectangle([(x1, y1), (x2, y2)], fill=(22, 32, 50), outline=(236, 72, 153), width=2)
     draw.text((x1 + 20, y1 + 18), "🖥️ Presentation Deck (Slide 1-6) + Speaker Notes & Multi-Format Exporters", font=f_title, fill=(236, 72, 153))
     draw.text((x1 + 20, y1 + 60), "Complete presenter script for each slide | 1-Click Native Exports: PPTX, DOCX, PDF, and SRT Subtitles", font=f_body, fill=(241, 245, 249))
 
-    # Metric Banner
     draw.rectangle([(40, 560), (1240, 630)], fill=(30, 41, 59))
     draw.text((640, 595), "⚡ Measured Generation Time: 29.3 milliseconds across all 7 formats simultaneously!", font=f_title, fill=(16, 185, 129), anchor="mm")
 
@@ -167,11 +160,9 @@ def create_scene_4(f_title, f_sub, f_body, progress):
     draw = ImageDraw.Draw(img)
     draw_header(draw, "STEP 3: GROUNDED CLAIM VERIFIER", "Automated Hallucination Defense & Source Passage Citations", f_title, f_sub)
     
-    # Left: Score Gauge Box
     draw.rectangle([(40, 110), (450, 630)], fill=(17, 30, 51), outline=(16, 185, 129), width=2)
     draw.text((245, 160), "Factual Groundedness", font=f_title, fill=(241, 245, 249), anchor="mm")
     
-    # Score circle
     draw.ellipse([(145, 200), (345, 400)], fill=(22, 32, 50), outline=(16, 185, 129), width=6)
     draw.text((245, 290), "94.2%", font=f_title, fill=(16, 185, 129), anchor="mm")
     draw.text((245, 330), "GROUNDED", font=f_sub, fill=(110, 231, 183), anchor="mm")
@@ -181,7 +172,6 @@ def create_scene_4(f_title, f_sub, f_body, progress):
     draw.text((70, 510), "• Logically Inferred: 3 (5.8%)", font=f_body, fill=(251, 191, 36))
     draw.text((70, 550), "• Flagged / Hallucinated: 0 (0.0%)", font=f_body, fill=(248, 113, 113))
 
-    # Right: Citation Proofs
     draw.rectangle([(480, 110), (1240, 630)], fill=(22, 32, 50), outline=(39, 53, 73), width=1)
     draw.text((505, 135), "Audit Telemetry: Direct Source Passage Verification", font=f_title, fill=(56, 189, 248))
     
@@ -208,7 +198,6 @@ def create_scene_5(f_title, f_sub, f_body, progress):
     draw = ImageDraw.Draw(img)
     draw_header(draw, "STEP 4: BLOCKCHAIN PROVENANCE LEDGER", "Tamper-Proof Audit Trail (Hyperledger Fabric Architecture)", f_title, f_sub)
     
-    # Left: Block structure
     draw.rectangle([(40, 110), (740, 630)], fill=(13, 21, 38), outline=(59, 130, 246), width=2)
     draw.text((65, 135), "CRYPTOGRAPHIC PROVENANCE BLOCK #1", font=f_title, fill=(96, 165, 250))
     
@@ -230,7 +219,6 @@ def create_scene_5(f_title, f_sub, f_body, progress):
         draw.text((220, y), v[:48] + ("..." if len(v) > 48 else ""), font=f_body, fill=c)
         y += 46
 
-    # Right: Provenance Certificate
     draw.rectangle([(780, 110), (1240, 630)], fill=(22, 32, 50), outline=(16, 185, 129), width=2)
     draw.text((805, 135), "Audit Certificate CERT-VM-303A", font=f_title, fill=(16, 185, 129))
     
@@ -261,7 +249,6 @@ def create_scene_6(f_title, f_sub, f_body, f_hero, progress):
     draw = ImageDraw.Draw(img)
     draw_header(draw, "VERIMORPH: RESULTS & CONCLUSION", "Empirical Impact for Smart India Hackathon 2026", f_title, f_sub)
     
-    # Result Cards
     results = [
         ("⚡ 98.8% Time Saved", "2.5 min turnaround vs 4.5 hours manual effort across 7 channel teams"),
         ("🛡️ 0.0% Hallucinations", "NIST-aligned claim verifier cross-references every single statement"),
@@ -276,7 +263,6 @@ def create_scene_6(f_title, f_sub, f_body, f_hero, progress):
         draw.text((x + 25, y + 25), title, font=f_hero, fill=(56, 189, 248))
         draw.text((x + 25, y + 75), desc, font=f_body, fill=(226, 232, 240))
         
-    # GitHub CTA Box
     draw.rectangle([(60, 480), (1200, 630)], fill=(15, 23, 42), outline=(139, 92, 246), width=2)
     draw.text((630, 520), "Live GitHub Repository & Codebase", font=f_title, fill=(167, 139, 250), anchor="mm")
     draw.text((630, 565), "https://github.com/Gokul26092004/VeriMorph", font=f_hero, fill=(255, 255, 255), anchor="mm")
@@ -286,57 +272,98 @@ def create_scene_6(f_title, f_sub, f_body, f_hero, progress):
     return img
 
 def main():
-    print("Rendering VeriMorph High-Definition Demo Video & Animated Walkthrough...")
+    print("================================================================================")
+    print("Rendering VeriMorph Video Demo with Voiceover Audio Explanation...")
+    print("================================================================================")
+    
+    out_dir = Path("C:/Users/Gokul/.gemini/antigravity/scratch/VeriMorph")
+    
+    # 1. Combine Audio Tracks into full_narration.wav
+    scene_files = [out_dir / f"scene_{i}.wav" for i in range(1, 7)]
+    full_audio_path = out_dir / "full_narration.wav"
+    
+    scene_durations = []
+    with wave.open(str(full_audio_path), "wb") as outfile:
+        with wave.open(str(scene_files[0]), "rb") as first:
+            outfile.setparams(first.getparams())
+            frames = first.readframes(first.getnframes())
+            outfile.writeframes(frames)
+            scene_durations.append(first.getnframes() / float(first.getframerate()))
+            
+        for sf in scene_files[1:]:
+            with wave.open(str(sf), "rb") as infile:
+                frames = infile.readframes(infile.getnframes())
+                outfile.writeframes(frames)
+                scene_durations.append(infile.getnframes() / float(infile.getframerate()))
+                
+    total_audio_sec = sum(scene_durations)
+    print(f"Concatenated Full Voiceover Audio: {total_audio_sec:.2f} seconds across 6 scenes.")
+
+    # 2. Render Video Frames synchronized with scene audio
     f_hero = get_font(32, bold=True)
     f_title = get_font(22, bold=True)
     f_body = get_font(16, bold=False)
     f_sub = get_font(13, bold=False)
     
-    # Scenes and their durations in seconds
-    scenes = [
-        (create_scene_1, 6),   # 6 sec
-        (create_scene_2, 8),   # 8 sec
-        (create_scene_3, 10),  # 10 sec
-        (create_scene_4, 9),   # 9 sec
-        (create_scene_5, 8),   # 8 sec
-        (create_scene_6, 7)    # 7 sec
+    scene_funcs = [
+        create_scene_1,
+        create_scene_2,
+        create_scene_3,
+        create_scene_4,
+        create_scene_5,
+        create_scene_6
     ]
     
-    total_duration = sum(d for _, d in scenes)
-    fps = 10  # 10 fps is smooth and renders fast
-    
-    frames = []
+    fps = 10
+    all_frames = []
     current_time = 0
     
-    for scene_fn, duration in scenes:
-        num_frames = int(duration * fps)
+    for i, (scene_fn, dur) in enumerate(zip(scene_funcs, scene_durations)):
+        num_frames = int(dur * fps)
         for f_idx in range(num_frames):
-            progress = (current_time + (f_idx / fps)) / total_duration
+            prog = (current_time + (f_idx / fps)) / total_audio_sec
             if scene_fn in [create_scene_1, create_scene_6]:
-                img = scene_fn(f_title, f_sub, f_body, f_hero, progress)
+                img = scene_fn(f_title, f_sub, f_body, f_hero, prog)
             else:
-                img = scene_fn(f_title, f_sub, f_body, progress)
-            frames.append(img)
-        current_time += duration
+                img = scene_fn(f_title, f_sub, f_body, prog)
+            all_frames.append(img)
+        current_time += dur
 
-    out_dir = Path("C:/Users/Gokul/.gemini/antigravity/scratch/VeriMorph")
+    temp_video_path = out_dir / "temp_video.mp4"
+    print(f"Exporting video stream to {temp_video_path}...")
+    imageio.mimsave(str(temp_video_path), all_frames, fps=fps, quality=8)
+
+    # 3. Mux Video + Audio with FFmpeg
+    final_mp4_path = out_dir / "VeriMorph_SIH2026_Demo_Video.mp4"
+    ffmpeg_exe = imageio_ffmpeg.get_ffmpeg_exe()
     
-    # 1. Save MP4 Video
-    mp4_path = out_dir / "VeriMorph_SIH2026_Demo_Video.mp4"
-    print(f"Exporting MP4 to {mp4_path}...")
-    imageio.mimsave(str(mp4_path), frames, fps=fps, quality=8)
-    print(f"✓ Created: {mp4_path} (Size: {os.path.getsize(mp4_path) / (1024*1024):.2f} MB)")
+    print(f"Muxing Video + Voiceover Audio with FFmpeg...")
+    cmd = [
+        ffmpeg_exe,
+        "-y",
+        "-i", str(temp_video_path),
+        "-i", str(full_audio_path),
+        "-c:v", "copy",
+        "-c:a", "aac",
+        "-b:a", "192k",
+        "-shortest",
+        str(final_mp4_path)
+    ]
+    subprocess.run(cmd, check=True)
+    print(f"✓ SUCCESSFULLY CREATED FINAL DEMO VIDEO WITH AUDIO EXPLANATION:")
+    print(f"  Path: {final_mp4_path}")
+    print(f"  Size: {os.path.getsize(final_mp4_path) / (1024*1024):.2f} MB")
+    print(f"  Duration: {total_audio_sec:.1f} seconds")
 
-    # 2. Save Animated GIF for GitHub README embedding
+    # 4. Generate Animated GIF for GitHub README (sampled)
     gif_path = out_dir / "VeriMorph_Demo_Walkthrough.gif"
-    print(f"Exporting GIF to {gif_path}...")
-    # Sample every 2nd frame for compact GIF
-    gif_frames = frames[::2]
+    print(f"Updating README Walkthrough GIF...")
+    gif_frames = all_frames[::4] # Sample every 4th frame for high-speed compact GIF
     gif_frames[0].save(
         str(gif_path),
         save_all=True,
         append_images=gif_frames[1:],
-        duration=int(1000 / (fps / 2)),
+        duration=150,
         loop=0,
         optimize=True
     )
