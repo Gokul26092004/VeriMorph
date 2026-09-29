@@ -1,7 +1,15 @@
 import os
+import sys
 import json
 from pathlib import Path
 from typing import Dict, Any, List, Optional
+
+# Ensure project root is in sys.path
+CURRENT_FILE = Path(__file__).resolve()
+PROJECT_ROOT_DIR = CURRENT_FILE.parent.parent.parent
+if str(PROJECT_ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT_DIR))
+
 from fastapi import FastAPI, HTTPException, UploadFile, File, Form
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
@@ -9,7 +17,7 @@ from pydantic import BaseModel
 
 from verimorph.config import (
     BASE_DIR, PROJECT_ROOT, DATA_DIR, EXPORTS_DIR,
-    SIH_METADATA, AUDIENCE_OPTIONS, TONE_OPTIONS, LANGUAGE_OPTIONS,
+    PLATFORM_METADATA, SIH_METADATA, AUDIENCE_OPTIONS, TONE_OPTIONS, LANGUAGE_OPTIONS,
     DETAIL_OPTIONS, OBJECTIVE_OPTIONS, SUPPORTED_FORMATS
 )
 from verimorph.ingestion import parse_text, parse_document, scrape_url
@@ -189,3 +197,14 @@ async def export_deliverable(
         with open(file_path, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2)
         return FileResponse(str(file_path), filename=f"{clean_title}_{format_type}.json", media_type="application/json")
+
+
+if __name__ == "__main__":
+    import uvicorn
+    print("\n" + "=" * 65)
+    print(" [VeriMorph] Starting Enterprise Web Server...")
+    print(" Access the Live Dashboard at: http://127.0.0.1:8000")
+    print(" (Or http://localhost:8000)")
+    print("=" * 65 + "\n")
+    uvicorn.run(app, host="127.0.0.1", port=8000)
+

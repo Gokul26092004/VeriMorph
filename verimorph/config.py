@@ -8,17 +8,17 @@ EXPORTS_DIR = PROJECT_ROOT / "exports"
 
 os.makedirs(EXPORTS_DIR, exist_ok=True)
 
-# SIH Hackathon Metadata
-SIH_METADATA = {
-    "problem_statement_id": "26154",
-    "problem_statement_title": "Gen AI Platform for Automated Content Transformation",
-    "theme": "Blockchain & Cybersecurity",
-    "category": "Software",
-    "team_id": "171612",
-    "team_name": "Tech stack",
+# Enterprise Platform Metadata
+PLATFORM_METADATA = {
+    "platform_id": "VM-26154",
+    "platform_title": "Gen AI Platform for Automated Content Transformation",
+    "theme": "Cryptographic Provenance & Enterprise AI",
+    "category": "Enterprise Software",
+    "team_name": "VeriMorph Core Engineering",
     "project_name": "VeriMorph",
     "tagline": "Gen AI Platform for Automated, Auditable Content Transformation from a Single Source"
 }
+SIH_METADATA = PLATFORM_METADATA  # backward-compatibility alias
 
 # Operator Controls Options
 AUDIENCE_OPTIONS = [
