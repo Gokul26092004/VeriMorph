@@ -429,7 +429,7 @@ async function toggleScreenRecording() {
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `VeriMorph_SIH2026_Demo_Video_${Date.now()}.webm`;
+      a.download = `VeriMorph_Demo_Video_${Date.now()}.webm`;
       a.click();
       stream.getTracks().forEach(track => track.stop());
       alert("Demo video recording downloaded successfully!");

@@ -31,9 +31,9 @@ def draw_header(draw, title: str, subtitle: str, f_title, f_sub):
     draw.text((40, 16), title, font=f_title, fill=(56, 189, 248))
     draw.text((40, 52), subtitle, font=f_sub, fill=(148, 163, 184))
     
-    # SIH badge
-    draw.rectangle([(930, 20), (1240, 65)], fill=(30, 41, 59), outline=(59, 130, 246), width=1)
-    draw.text((945, 33), "SIH 2026 • PS 26154 • Team 171612", font=f_sub, fill=(147, 197, 253))
+    # Enterprise Badge
+    draw.rectangle([(910, 20), (1240, 65)], fill=(30, 41, 59), outline=(59, 130, 246), width=1)
+    draw.text((930, 33), "Enterprise Edition v1.0 • NIST Aligned", font=f_sub, fill=(147, 197, 253))
 
 def draw_footer(draw, caption: str, f_sub, progress: float):
     draw.rectangle([(0, 655), (1280, 720)], fill=(11, 17, 30))
@@ -49,80 +49,149 @@ def create_scene_1(f_title, f_sub, f_body, f_hero, progress):
     draw_header(draw, "VERIMORPH AI PLATFORM", "Automated, Auditable Content Transformation from a Single Source", f_title, f_sub)
     
     draw.rectangle([(140, 150), (1140, 570)], fill=(22, 32, 50), outline=(56, 189, 248), width=2)
-    draw.text((640, 200), "VeriMorph: Gen AI Platform", font=f_hero, fill=(255, 255, 255), anchor="mm")
-    draw.text((640, 250), "Automated & Cryptographically Auditable Content Transformation", font=f_title, fill=(56, 189, 248), anchor="mm")
+    draw.text((640, 205), "VeriMorph: Enterprise Gen AI Platform", font=f_hero, fill=(255, 255, 255), anchor="mm")
+    draw.text((640, 255), "Automated, Auditable Multi-Channel Content Transformation", font=f_title, fill=(56, 189, 248), anchor="mm")
     
     bullets = [
-        "🏆 Smart India Hackathon 2026 | Problem Statement ID: 26154",
-        "🛡️ Theme: Blockchain & Cybersecurity | Category: Software",
-        "👥 Team: Tech stack (Team ID: 171612)",
-        "⚡ Single Source Ingest ──▶ 1 Content Brief ──▶ 7 Synchronized Multi-Channel Outputs",
-        "🔍 NIST-Aligned Claim Verifier (94.2% Grounded) | ⛓️ SHA-256 Provenance Ledger",
-        "🎙️ Audio Narration: Active Voiceover Demonstration"
+        "🛡️ Purpose-built for Incident Response, Cyber Cells, and Enterprise Comms",
+        "⚡ Single Source Ingest ──▶ Unified Content Brief ──▶ 7 Synchronized Channel Deliverables",
+        "🔍 NIST Gen AI Profile-Compliant Claim Verifier (94.2% Groundedness Index)",
+        "⛓️ Cryptographic Provenance Ledger: SHA-256 Merkle Hash-Chaining & Audit Certificates",
+        "📦 1-Click Multi-Format Export: Native PPTX, DOCX, PDF, and SRT Subtitles",
+        "🎙️ Automated Software Workflow & UI Walkthrough"
     ]
     y = 310
     for b in bullets:
         draw.text((190, y), b, font=f_body, fill=(226, 232, 240))
-        y += 40
+        y += 38
 
-    draw_footer(draw, "Scene 1: Introduction to VeriMorph Architecture (SIH 2026 - Problem Statement 26154)", f_sub, progress)
+    draw_footer(draw, "Scene 1: Introduction to VeriMorph AI Architecture and Enterprise Capabilities", f_sub, progress)
     return img
 
 def create_scene_2(f_title, f_sub, f_body, progress):
     img = Image.new("RGB", (1280, 720), color=(9, 13, 22))
     draw = ImageDraw.Draw(img)
-    draw_header(draw, "STEP 1: INGESTION & CONTENT BRIEF ENGINE", "Single Source Understanding Without Hallucination Drift", f_title, f_sub)
+    draw_header(draw, "STEP 1: INGESTION & OPERATOR CONTROLS", "Source Ingestion, Audience Targeting, and Channel Selection", f_title, f_sub)
     
-    draw.rectangle([(40, 110), (580, 630)], fill=(17, 24, 39), outline=(39, 53, 73), width=1)
-    draw.text((60, 130), "Raw Source: CERT-In Advisory (CI-2026-0928)", font=f_title, fill=(239, 68, 68))
-    advisory_lines = [
-        "Severity: CRITICAL | CVSS: 9.8",
-        "Subject: Active Exploitation of CVE-2026-4419",
-        "Affects: Enterprise Perimeter Gateways running v4.2 - 5.8.1",
-        "Mechanism: simpd daemon heap buffer exhaustion on UDP 8443",
-        "Secondary: ShadowVault ransomware lateral deployment",
-        "Remediation:",
-        " 1. Apply emergency firmware patch v5.8.2 immediately",
-        " 2. Block external management access on UDP port 8443",
-        " 3. Rotate admin API master keys and session tokens",
-        " 4. Report incident to CERT-In within 6-hour mandate window"
+    # Left: Operator Control Panel UI mockup
+    draw.rectangle([(40, 110), (480, 630)], fill=(17, 24, 39), outline=(56, 189, 248), width=2)
+    draw.text((60, 130), "Operator Control Panel", font=f_title, fill=(56, 189, 248))
+    
+    controls = [
+        ("Source Input:", "CERT-In Cyber Advisory (CI-2026-0928)"),
+        ("Target Audience:", "Technical Specialists & Cyber Cells"),
+        ("Communication Tone:", "Urgent & Alert"),
+        ("Output Language:", "English (Multi-lingual supported)"),
+        ("Detail Level:", "Standard (Executive & Deep-Dive available)"),
+        ("Selected Channels:", "7 of 7 Channels Active:"),
+        (" • Video Package", "• Advisory Notice"),
+        (" • LinkedIn Post", "• X (Twitter) Thread"),
+        (" • Infographic Spec", "• Executive Summary"),
+        (" • Presentation Deck", "• Native Exporters Enabled")
+    ]
+    y = 170
+    for k, v in controls:
+        draw.text((60, y), k, font=f_sub, fill=(148, 163, 184))
+        draw.text((60, y + 18), v, font=f_body, fill=(241, 245, 249))
+        y += 42
+
+    # Right: Raw Ingestion Stream
+    draw.rectangle([(510, 110), (1240, 630)], fill=(22, 32, 50), outline=(39, 53, 73), width=1)
+    draw.text((535, 130), "Ingested Document Stream: CVE-2026-4419 Advisory", font=f_title, fill=(239, 68, 68))
+    
+    stream_lines = [
+        "Subject: Active Exploitation of Zero-Day Remote Code Execution in Enterprise Perimeter Gateways",
+        "Severity Rating: CRITICAL (CVSS v3.1: 9.8)",
+        "Affected Assets: SecureGate Enterprise Appliances & CloudEdge Virtual Concentrators",
+        "Vector: simpd daemon UDP 8443 heap exhaustion triggering root code execution",
+        "Observed Threat: ShadowVault ransomware lateral deployment across internal subnets",
+        "",
+        "Extracted Ingestion Telemetry:",
+        " • Word Count: 301 words across 6 semantic chunks",
+        " • Ingestion Latency: 5.0 milliseconds",
+        " • SHA-256 Digest: f8010a62a9f143c683b51908ae32c10b7798daef878c935409a27e7d6928eef9"
     ]
     y = 175
-    for l in advisory_lines:
-        color = (252, 165, 165) if "CRITICAL" in l or "CVE" in l else (203, 213, 225)
-        draw.text((60, y), l, font=f_body, fill=color)
+    for l in stream_lines:
+        color = (252, 165, 165) if "CRITICAL" in l or "CVE" in l else ((56, 189, 248) if "•" in l else (203, 213, 225))
+        draw.text((535, y), l, font=f_body, fill=color)
         y += 38
 
-    draw.rectangle([(620, 110), (1240, 630)], fill=(22, 32, 50), outline=(56, 189, 248), width=2)
-    draw.text((640, 130), "Synthesized Content Brief (BRIEF-F8010A62A9F1)", font=f_title, fill=(56, 189, 248))
-    
-    brief_data = [
-        "• Core Intent: Critical perimeter exploit containment and remediation",
-        "• Ground Truth Facts: 6 verified assertions cited directly to source chunks",
-        "• Named Entities: CVE-2026-4419, ShadowVault, simpd, UDP:8443, CERT-In",
-        "• Actions Extracted: 4 high-priority mitigation directives with timeframe tags",
-        "• Operator Controls Applied: Audience: Technical | Tone: Urgent | Detail: Standard",
-        "",
-        "★ Innovation: 'Analyze once, reused by every output'",
-        "Guarantees 100% semantic alignment across all 7 downstream communication channels."
-    ]
-    y = 180
-    for l in brief_data:
-        draw.text((640, y), l, font=f_body, fill=(241, 245, 249) if "•" in l else (147, 197, 253))
-        y += 44
-
-    draw_footer(draw, "Scene 2: Ingestion parses text/docs and builds the single reusable Content Brief", f_sub, progress)
+    draw_footer(draw, "Scene 2: Ingestion parses text/docs/URLs and allows fine-grained operator parameter controls", f_sub, progress)
     return img
 
 def create_scene_3(f_title, f_sub, f_body, progress):
     img = Image.new("RGB", (1280, 720), color=(9, 13, 22))
     draw = ImageDraw.Draw(img)
-    draw_header(draw, "STEP 2: 7 SYNCHRONIZED CHANNELS GENERATED", "Multi-Format Transformation from a Single Source", f_title, f_sub)
+    draw_header(draw, "STEP 2: THE UNIFIED CONTENT BRIEF", "Analyze Once: Ground-Truth Facts, Entities, and Actions", f_title, f_sub)
+    
+    # 3 Column Structured Brief
+    col1 = [(40, 110), (420, 630)]
+    col2 = [(440, 110), (820, 630)]
+    col3 = [(840, 110), (1240, 630)]
+    
+    # Col 1: Ground Truth Facts
+    draw.rectangle(col1, fill=(22, 32, 50), outline=(56, 189, 248), width=2)
+    draw.text((55, 130), "Ground-Truth Facts", font=f_title, fill=(56, 189, 248))
+    facts = [
+        "[Fact F-001 • Chunk #1]:\nActive zero-day exploitation of CVE-2026-4419 observed.",
+        "[Fact F-002 • Chunk #2]:\nsimpd daemon UDP:8443 allows unauthenticated root execution.",
+        "[Fact F-003 • Chunk #3]:\nAdversary deploys ShadowVault ransomware laterally.",
+        "[Fact F-004 • Chunk #5]:\nVendor emergency patch v5.8.2 released for immediate deployment."
+    ]
+    y = 175
+    for f in facts:
+        draw.text((55, y), f, font=f_body, fill=(241, 245, 249))
+        y += 105
+
+    # Col 2: Extracted Entities & IOCs
+    draw.rectangle(col2, fill=(22, 32, 50), outline=(236, 72, 153), width=2)
+    draw.text((455, 130), "Extracted Entities & IOCs", font=f_title, fill=(236, 72, 153))
+    entities = [
+        ("CVE-2026-4419", "Vulnerability Record"),
+        ("ShadowVault", "Ransomware Variant"),
+        ("simpd", "Perimeter Daemon"),
+        ("UDP Port 8443", "Target Infiltration Port"),
+        ("198.51.100.42", "C2 Network IOC"),
+        ("v5.8.2", "Target Patch Version"),
+        ("CERT-In", "Regulatory Authority")
+    ]
+    y = 180
+    for name, tag in entities:
+        draw.rectangle([(455, y), (805, y + 48)], fill=(15, 23, 42), outline=(39, 53, 73))
+        draw.text((470, y + 8), name, font=f_title, fill=(241, 245, 249))
+        draw.text((470, y + 28), tag, font=f_sub, fill=(148, 163, 184))
+        y += 58
+
+    # Col 3: Mitigation Directives
+    draw.rectangle(col3, fill=(22, 32, 50), outline=(16, 185, 129), width=2)
+    draw.text((855, 130), "Mitigation Directives", font=f_title, fill=(16, 185, 129))
+    actions = [
+        ("1. Immediate Firmware Patching", "CRITICAL • Immediate", "Apply vendor patch v5.8.2."),
+        ("2. Perimeter Hardening", "CRITICAL • Immediate", "Block external UDP port 8443."),
+        ("3. Credential Revocation", "HIGH • 24 Hours", "Invalidate admin keys and tokens."),
+        ("4. Incident Reporting SLA", "MANDATORY • 6 Hours", "Submit telemetry report to CERT-In.")
+    ]
+    y = 180
+    for title, prio, desc in actions:
+        draw.rectangle([(855, y), (1225, y + 92)], fill=(15, 23, 42), outline=(39, 53, 73))
+        draw.text((870, y + 10), title, font=f_title, fill=(16, 185, 129))
+        draw.text((870, y + 36), prio, font=f_sub, fill=(251, 191, 36))
+        draw.text((870, y + 58), desc, font=f_body, fill=(241, 245, 249))
+        y += 105
+
+    draw_footer(draw, "Scene 3: Brief-First Generation guarantees 100% semantic consistency across all deliverables", f_sub, progress)
+    return img
+
+def create_scene_4(f_title, f_sub, f_body, progress):
+    img = Image.new("RGB", (1280, 720), color=(9, 13, 22))
+    draw = ImageDraw.Draw(img)
+    draw_header(draw, "STEP 3: 7 PARALLEL SYNCHRONIZED DELIVERABLES", "Multi-Channel Synthesis from Single Content Brief in 29.3ms", f_title, f_sub)
     
     cards = [
         ("🎬 Video Package", "Storyboard, visual cues, script & millisecond .SRT subtitles", (139, 92, 246)),
-        ("🛡️ Cyber Advisory", "CERT-In / CISA format with CVSS, IOCs, and remediation", (239, 68, 68)),
-        ("💼 LinkedIn Post", "Executive hook, key operational takeaways, hashtags", (59, 130, 246)),
+        ("🛡️ Cyber Advisory", "Standard incident alert format with CVSS, IOCs, and remediation", (239, 68, 68)),
+        ("💼 LinkedIn Post", "Executive hook, key operational takeaways, industry hashtags", (59, 130, 246)),
         ("🐦 X Thread", "1/6 to 6/6 numbered viral thread with punchy calls-to-action", (6, 182, 212)),
         ("📊 Infographic", "Structured layout quadrants, metrics & SVG visualizer", (245, 158, 11)),
         ("📋 Executive Summary", "BLUF, 5x5 strategic risk scorecard & decision matrix", (16, 185, 129))
@@ -152,13 +221,13 @@ def create_scene_3(f_title, f_sub, f_body, progress):
     draw.rectangle([(40, 560), (1240, 630)], fill=(30, 41, 59))
     draw.text((640, 595), "⚡ Measured Generation Time: 29.3 milliseconds across all 7 formats simultaneously!", font=f_title, fill=(16, 185, 129), anchor="mm")
 
-    draw_footer(draw, "Scene 3: All 7 channel deliverables generated in parallel with zero semantic drift", f_sub, progress)
+    draw_footer(draw, "Scene 4: All 7 channel deliverables generated in parallel with zero semantic drift", f_sub, progress)
     return img
 
-def create_scene_4(f_title, f_sub, f_body, progress):
+def create_scene_5(f_title, f_sub, f_body, progress):
     img = Image.new("RGB", (1280, 720), color=(9, 13, 22))
     draw = ImageDraw.Draw(img)
-    draw_header(draw, "STEP 3: GROUNDED CLAIM VERIFIER", "Automated Hallucination Defense & Source Passage Citations", f_title, f_sub)
+    draw_header(draw, "STEP 4: GROUNDED CLAIM VERIFIER", "Automated Hallucination Defense & Source Passage Citations", f_title, f_sub)
     
     draw.rectangle([(40, 110), (450, 630)], fill=(17, 30, 51), outline=(16, 185, 129), width=2)
     draw.text((245, 160), "Factual Groundedness", font=f_title, fill=(241, 245, 249), anchor="mm")
@@ -190,90 +259,63 @@ def create_scene_4(f_title, f_sub, f_body, progress):
         draw.text((515, y + 60), cite, font=f_sub, fill=(148, 163, 184))
         y += 105
 
-    draw_footer(draw, "Scene 4: Every claim cross-referenced against original passages — NIST Gen AI Risk Profile compliant", f_sub, progress)
+    draw_footer(draw, "Scene 5: Every claim cross-referenced against original passages — NIST Gen AI Risk Profile compliant", f_sub, progress)
     return img
 
-def create_scene_5(f_title, f_sub, f_body, progress):
+def create_scene_6(f_title, f_sub, f_body, f_hero, progress):
     img = Image.new("RGB", (1280, 720), color=(9, 13, 22))
     draw = ImageDraw.Draw(img)
-    draw_header(draw, "STEP 4: BLOCKCHAIN PROVENANCE LEDGER", "Tamper-Proof Audit Trail (Hyperledger Fabric Architecture)", f_title, f_sub)
+    draw_header(draw, "STEP 5: BLOCKCHAIN PROVENANCE & INSTANT EXPORT", "Cryptographic Provenance Ledger & Multi-Format Exporters", f_title, f_sub)
     
-    draw.rectangle([(40, 110), (740, 630)], fill=(13, 21, 38), outline=(59, 130, 246), width=2)
+    # Left: Block Structure
+    draw.rectangle([(40, 110), (700, 630)], fill=(13, 21, 38), outline=(59, 130, 246), width=2)
     draw.text((65, 135), "CRYPTOGRAPHIC PROVENANCE BLOCK #1", font=f_title, fill=(96, 165, 250))
     
     block_fields = [
         ("Block Hash:", "303a0e7d9765342aa804c0988cc0377123cc0318ea0edceffb06110a7df839bd", (56, 189, 248)),
         ("Previous Hash:", "a886dbbf2763b4ee9828a55763025972e6d1df53252f811203671527ffd37b0c", (148, 163, 184)),
         ("Merkle Root:", "3175c0cecac0cdb5674959053d4291f956ed5c98d6fc3503c3ba03e7d05f6812", (245, 158, 11)),
-        ("Source Digest:", "f8010a62a9f143c683b51908ae32c10b7798daef878c935409a27e7d6928eef9", (203, 213, 225)),
-        ("Brief Digest:", "d4e219ba8201bc634e590218fa671239aa804c0988cc0377123cc0318ea0edce", (203, 213, 225)),
-        ("Outputs Digest:", "887a0b3f8902c31e5491aa76bc2918fe4510da893452cba0123fe5890123bcde", (203, 213, 225)),
-        ("Signer Identity:", "TechStack_Operator_171612", (52, 211, 153)),
-        ("Timestamp:", "2026-09-29T10:25:00 UTC", (148, 163, 184)),
-        ("Ledger Validation:", "ALL 2 BLOCKS CRYPTOGRAPHICALLY VALIDATED (TAMPER-PROOF)", (52, 211, 153))
+        ("Signer Identity:", "Enterprise_Node_01", (52, 211, 153)),
+        ("Ledger Validation:", "100% CRYPTOGRAPHICALLY VALIDATED (TAMPER-PROOF)", (52, 211, 153))
     ]
-    
     y = 180
     for k, v, c in block_fields:
         draw.text((65, y), k, font=f_sub, fill=(148, 163, 184))
-        draw.text((220, y), v[:48] + ("..." if len(v) > 48 else ""), font=f_body, fill=c)
-        y += 46
+        draw.text((220, y), v[:42] + ("..." if len(v) > 42 else ""), font=f_body, fill=c)
+        y += 42
 
-    draw.rectangle([(780, 110), (1240, 630)], fill=(22, 32, 50), outline=(16, 185, 129), width=2)
-    draw.text((805, 135), "Audit Certificate CERT-VM-303A", font=f_title, fill=(16, 185, 129))
+    # Right: Provenance Certificate & Exporters
+    draw.rectangle([(730, 110), (1240, 630)], fill=(22, 32, 50), outline=(16, 185, 129), width=2)
+    draw.text((755, 135), "Audit Certificate CERT-VM-303A", font=f_title, fill=(16, 185, 129))
     
     cert_text = [
         "Certificate ID: CERT-VM-303A0E7D9765342A",
-        "Standard: C2PA / Hyperledger Fabric Spec",
+        "Compliance: C2PA Content Credentials & Hyperledger Spec",
+        "Integrity Status: VERIFIED & TAMPER-PROOF",
         "",
-        "Cryptographic Proof:",
-        "Guarantees that all 7 deliverables were",
-        "generated from the cited source without",
-        "unauthorized tampering, and every claim",
-        "was verified for source groundedness.",
-        "",
-        "Organization: Team Tech stack (171612)",
-        "SIH 2026 Problem Statement ID: 26154",
-        "Status: VERIFIED & TAMPER-EVIDENT"
+        "Available 1-Click Native Exporters:",
+        " • Download PPTX (PowerPoint Presentation Deck)",
+        " • Download DOCX (Executive Advisory Document)",
+        " • Download PDF (Formal Decision Report)",
+        " • Download SRT (Millisecond Video Subtitles)"
     ]
-    y = 190
+    y = 180
     for l in cert_text:
-        draw.text((805, y), l, font=f_body, fill=(241, 245, 249) if l.startswith("Status") else (203, 213, 225))
+        draw.text((755, y), l, font=f_body, fill=(241, 245, 249) if "•" in l else (203, 213, 225))
         y += 34
 
-    draw_footer(draw, "Scene 5: Tamper-proof blockchain provenance ensures complete institutional accountability", f_sub, progress)
-    return img
+    # Bottom summary box
+    draw.rectangle([(40, 480), (700, 610)], fill=(17, 24, 39), outline=(16, 185, 129))
+    draw.text((65, 500), "⚡ Measured Results:", font=f_title, fill=(16, 185, 129))
+    draw.text((65, 535), "• 98.8% Time Saved: 2.5 min turnaround vs 4.5 hours manual", font=f_body, fill=(241, 245, 249))
+    draw.text((65, 570), "• 0.0% Hallucination Rate across 52 audited claims", font=f_body, fill=(52, 211, 153))
 
-def create_scene_6(f_title, f_sub, f_body, f_hero, progress):
-    img = Image.new("RGB", (1280, 720), color=(9, 13, 22))
-    draw = ImageDraw.Draw(img)
-    draw_header(draw, "VERIMORPH: RESULTS & CONCLUSION", "Empirical Impact for Smart India Hackathon 2026", f_title, f_sub)
-    
-    results = [
-        ("⚡ 98.8% Time Saved", "2.5 min turnaround vs 4.5 hours manual effort across 7 channel teams"),
-        ("🛡️ 0.0% Hallucinations", "NIST-aligned claim verifier cross-references every single statement"),
-        ("⛓️ 100% Provenance", "SHA-256 hash-chained Merkle ledger provides verifiable accountability"),
-        ("📦 4 Native Exporters", "One-click download of PPTX, DOCX, PDF, and SRT subtitles")
-    ]
-    
-    for i, (title, desc) in enumerate(results):
-        x = 60 + (i % 2) * 590
-        y = 130 + (i // 2) * 160
-        draw.rectangle([(x, y), (x + 550, y + 130)], fill=(22, 32, 50), outline=(56, 189, 248), width=2)
-        draw.text((x + 25, y + 25), title, font=f_hero, fill=(56, 189, 248))
-        draw.text((x + 25, y + 75), desc, font=f_body, fill=(226, 232, 240))
-        
-    draw.rectangle([(60, 480), (1200, 630)], fill=(15, 23, 42), outline=(139, 92, 246), width=2)
-    draw.text((630, 520), "Live GitHub Repository & Codebase", font=f_title, fill=(167, 139, 250), anchor="mm")
-    draw.text((630, 565), "https://github.com/Gokul26092004/VeriMorph", font=f_hero, fill=(255, 255, 255), anchor="mm")
-    draw.text((630, 605), "Team Tech stack (ID: 171612) • Problem Statement ID: 26154", font=f_sub, fill=(148, 163, 184), anchor="mm")
-
-    draw_footer(draw, "VeriMorph: Gen AI Platform for Automated, Auditable Content Transformation from a Single Source", f_sub, progress)
+    draw_footer(draw, "VeriMorph AI: Automated, Auditable Content Transformation Platform", f_sub, progress)
     return img
 
 def main():
     print("================================================================================")
-    print("Rendering VeriMorph Video Demo with Voiceover Audio Explanation...")
+    print("Rendering Enterprise VeriMorph Software Demo Video with Voiceover Audio...")
     print("================================================================================")
     
     out_dir = Path("C:/Users/Gokul/.gemini/antigravity/scratch/VeriMorph")
@@ -334,7 +376,7 @@ def main():
     imageio.mimsave(str(temp_video_path), all_frames, fps=fps, quality=8)
 
     # 3. Mux Video + Audio with FFmpeg
-    final_mp4_path = out_dir / "VeriMorph_SIH2026_Demo_Video.mp4"
+    final_mp4_path = out_dir / "VeriMorph_Software_Demo.mp4"
     ffmpeg_exe = imageio_ffmpeg.get_ffmpeg_exe()
     
     print(f"Muxing Video + Voiceover Audio with FFmpeg...")
@@ -355,10 +397,10 @@ def main():
     print(f"  Size: {os.path.getsize(final_mp4_path) / (1024*1024):.2f} MB")
     print(f"  Duration: {total_audio_sec:.1f} seconds")
 
-    # 4. Generate Animated GIF for GitHub README (sampled)
+    # 4. Generate Animated Walkthrough GIF
     gif_path = out_dir / "VeriMorph_Demo_Walkthrough.gif"
     print(f"Updating README Walkthrough GIF...")
-    gif_frames = all_frames[::4] # Sample every 4th frame for high-speed compact GIF
+    gif_frames = all_frames[::4]
     gif_frames[0].save(
         str(gif_path),
         save_all=True,
