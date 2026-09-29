@@ -201,10 +201,22 @@ async def export_deliverable(
 
 if __name__ == "__main__":
     import uvicorn
+    import socket
+
+    def find_free_port(start_port=8000):
+        for p in range(start_port, start_port + 20):
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                s.settimeout(0.5)
+                if s.connect_ex(('127.0.0.1', p)) != 0:
+                    return p
+        return start_port
+
+    target_port = find_free_port(8000)
     print("\n" + "=" * 65)
     print(" [VeriMorph] Starting Enterprise Web Server...")
-    print(" Access the Live Dashboard at: http://127.0.0.1:8000")
-    print(" (Or http://localhost:8000)")
+    print(f" Access the Live Dashboard at: http://127.0.0.1:{target_port}")
+    print(f" (Or http://localhost:{target_port})")
     print("=" * 65 + "\n")
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    uvicorn.run(app, host="127.0.0.1", port=target_port)
+
 
