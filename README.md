@@ -28,6 +28,15 @@
 
 ---
 
+## 🎬 Live Prototype Demo Video & Walkthrough
+
+![VeriMorph Demo Walkthrough](VeriMorph_Demo_Walkthrough.gif)
+
+> 🎥 **Official Demo Video (MP4):** [`VeriMorph_SIH2026_Demo_Video.mp4`](VeriMorph_SIH2026_Demo_Video.mp4)  
+> *End-to-End Walkthrough: Single Source Ingestion ➔ Content Brief ➔ 7 Multi-Channel Deliverables ➔ Grounded Claim Verifier (94.2% Grounded, 0% Hallucinations) ➔ Blockchain Provenance Ledger.*
+
+---
+
 ## 🌍 The Problem
 
 Organisations turn technical reports, advisories, threat intel, and policy articles into videos, social posts, briefs, and presentation slides **by hand**:
