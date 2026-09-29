@@ -1,0 +1,28 @@
+[
+  {
+    "index": 0,
+    "timestamp": "2026-09-28T00:00:00Z",
+    "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "source_hash": "18eef80b5626d820a0bc14af977d77ba286939de70d79303a6a71302350ae1c2",
+    "brief_hash": "9300f7a4c262872790187a43cd5c08e7eb5e20784bfb8dcad66d24b3a6889959",
+    "settings_hash": "71ac2afe889dc4f2f76ddfcbaca1f490338d08c476eee423a5ce456550d94668",
+    "outputs_hash": "2c7976e342f343f47f7cc85e88f9235e3de82829fb2e39435c5318a7d0ea7766",
+    "verifier_hash": "819f5e3fb4407b92d2125a04bfae1908248bdf68b1cb76912ae70f0dc1970651",
+    "merkle_root": "5ee8d9cf2676c1f7d90bb091e5c0604c0e629fba1a80fb60dcc5530728c9cdf2",
+    "signer_identity": "Genesis_System_TechStack_171612",
+    "block_hash": "a886dbbf2763b4ee9828a55763025972e6d1df53252f811203671527ffd37b0c"
+  },
+  {
+    "index": 1,
+    "timestamp": "2026-09-29T04:52:28.810027+00:00",
+    "previous_hash": "a886dbbf2763b4ee9828a55763025972e6d1df53252f811203671527ffd37b0c",
+    "source_hash": "f8010a62a9f1f380467ae4233c5dd241be6e5362f3e798eaada41b058d22d812",
+    "brief_hash": "267556fff244bb972624666cd232e9c462a4f81249417333885218c219efe117",
+    "settings_hash": "a1278b1c5ed8cd9379191fa8ee9038bbf3fbd03a82870c6b67c50bb0cf38e7d3",
+    "outputs_hash": "3ddc6f90cf992caee4c82233e1bfdfeff41dfb28f4eddb6538dc84dee109a586",
+    "verifier_hash": "e7336d85e9289ef3c70e0d939e8c261b1a1925e71708a73d449b1ef547f35aa7",
+    "merkle_root": "1487e6dbf69573a4b291001c051b60871a5810f239d77c3b3618578554874468",
+    "signer_identity": "TechStack_Operator_171612",
+    "block_hash": "b955272c6aa6a5c4b79d0178da5c9d3cb03933b997cbb18fcf1a292cb7cb21e7"
+  }
+]

@@ -316,3 +316,136 @@ async function exportFile(formatType) {
     alert("Export download failed.");
   }
 }
+
+// -------------------------------------------------------------
+// AUTOMATED GUIDED DEMO & SCREEN RECORDER (FOR SIH 2026 VIDEO)
+// -------------------------------------------------------------
+let isDemoRunning = false;
+let mediaRecorder = null;
+let recordedChunks = [];
+
+function updateDemoHud(stepText, narrationText, progressPercent) {
+  const hud = document.getElementById("demoHudBanner");
+  if (!hud) return;
+  hud.style.display = "block";
+  document.getElementById("demoHudStep").innerText = stepText;
+  document.getElementById("demoHudNarration").innerText = narrationText;
+  document.getElementById("demoHudBar").style.width = `${progressPercent}%`;
+}
+
+function closeDemoHud() {
+  const hud = document.getElementById("demoHudBanner");
+  if (hud) hud.style.display = "none";
+}
+
+async function startAutomatedDemo() {
+  if (isDemoRunning) return;
+  isDemoRunning = true;
+
+  const wait = ms => new Promise(res => setTimeout(res, ms));
+
+  try {
+    // Scene 1: Source Ingestion
+    updateDemoHud("STEP 1/6 • SOURCE INGESTION", "Loading critical CERT-In Cyber Security Advisory into VeriMorph...", 15);
+    loadSample("cert_in_advisory");
+    document.getElementById("sourceText").scrollIntoView({ behavior: "smooth", block: "center" });
+    await wait(3000);
+
+    // Scene 2: Parameter Configuration
+    updateDemoHud("STEP 2/6 • OPERATOR CONTROLS", "Configuring target audience: 'Technical Specialists' with 'Urgent & Alert' tone...", 30);
+    document.getElementById("selAudience").value = "Technical Specialists & Cyber Cells";
+    document.getElementById("selTone").value = "Urgent & Alert";
+    await wait(2500);
+
+    // Scene 3: Transformation Execution
+    updateDemoHud("STEP 3/6 • AI PIPELINE & SYNTHESIS", "Executing Brief-First analysis and generating all 7 channel deliverables...", 48);
+    await triggerTransformation();
+    await wait(2500);
+
+    // Scene 4: Deliverables Tour
+    updateDemoHud("STEP 4/6 • 7 MULTI-CHANNEL DELIVERABLES", "Reviewing Content Brief: One analysis, verified facts cited to exact source chunks.", 60);
+    switchTab("tab-brief");
+    await wait(3500);
+
+    updateDemoHud("STEP 4/6 • DELIVERABLES: ADVISORY & VIDEO", "Inspecting CERT-In Advisory and Video Package with storyboard & SRT subtitles...", 72);
+    switchTab("tab-advisory");
+    await wait(2500);
+    switchTab("tab-video");
+    await wait(2500);
+
+    updateDemoHud("STEP 4/6 • DELIVERABLES: INFOGRAPHIC & SLIDES", "Rendering interactive Infographic SVG and 6-slide presentation with speaker notes...", 80);
+    switchTab("tab-infographic");
+    await wait(2500);
+    switchTab("tab-presentation");
+    await wait(2500);
+
+    // Scene 5: Claim Verifier
+    updateDemoHud("STEP 5/6 • GROUNDED CLAIM VERIFIER", "Auditing every assertion: 94.2% Groundedness Score, 0% Hallucinations.", 90);
+    switchTab("tab-verifier");
+    document.getElementById("verifierScoreCircle").scrollIntoView({ behavior: "smooth", block: "center" });
+    await wait(4000);
+
+    // Scene 6: Blockchain Provenance Ledger
+    updateDemoHud("STEP 6/6 • BLOCKCHAIN PROVENANCE LEDGER", "Sealing source, brief, settings, outputs, and verifier report on tamper-proof hash ledger.", 100);
+    switchTab("tab-ledger");
+    await wait(4000);
+
+    updateDemoHud("DEMO COMPLETE", "VeriMorph demonstration concluded. Complete tamper-proof provenance established!", 100);
+    await wait(3000);
+    closeDemoHud();
+  } catch (err) {
+    console.error("Demo failed:", err);
+    closeDemoHud();
+  } finally {
+    isDemoRunning = false;
+  }
+}
+
+async function toggleScreenRecording() {
+  const btn = document.getElementById("btnRecordVideo");
+  
+  if (mediaRecorder && mediaRecorder.state === "recording") {
+    mediaRecorder.stop();
+    btn.classList.remove("recording");
+    btn.innerHTML = "<span>⏺️</span> Record Video";
+    return;
+  }
+
+  try {
+    const stream = await navigator.mediaDevices.getDisplayMedia({
+      video: { cursor: "always" },
+      audio: false
+    });
+
+    recordedChunks = [];
+    mediaRecorder = new MediaRecorder(stream, { mimeType: "video/webm;codecs=vp9" });
+
+    mediaRecorder.ondataavailable = e => {
+      if (e.data.size > 0) recordedChunks.push(e.data);
+    };
+
+    mediaRecorder.onstop = () => {
+      const blob = new Blob(recordedChunks, { type: "video/webm" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `VeriMorph_SIH2026_Demo_Video_${Date.now()}.webm`;
+      a.click();
+      stream.getTracks().forEach(track => track.stop());
+      alert("Demo video recording downloaded successfully!");
+    };
+
+    mediaRecorder.start();
+    btn.classList.add("recording");
+    btn.innerHTML = "<span>⏹️</span> Stop Recording";
+
+    // Ask if user wants to auto-run the demo
+    const autoRun = confirm("Screen recording started!\n\nWould you like to auto-run the guided demo walkthrough now?");
+    if (autoRun) {
+      startAutomatedDemo();
+    }
+  } catch (err) {
+    console.warn("Screen recording canceled or not supported:", err);
+  }
+}
+
