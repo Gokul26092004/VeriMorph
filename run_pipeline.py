@@ -1,15 +1,15 @@
 """
-VeriMorph CLI Demo Runner
-Smart India Hackathon 2026 | Problem Statement 26154 | Team ID: 171612 (Tech stack)
+VeriMorph CLI Pipeline & Benchmark Verification Runner
 
 Executes an end-to-end multi-format transformation from a single source document,
 runs the Claim Verifier, mints a cryptographic block on the Blockchain Ledger,
-and outputs all 7 deliverables.
+measures telemetry benchmarks, and outputs all deliverables.
 """
 
 import sys
 import os
 import json
+import time
 from pathlib import Path
 
 # Fix Windows console UTF-8 encoding for emojis
@@ -17,7 +17,7 @@ if sys.platform == "win32" and hasattr(sys.stdout, "buffer"):
     import io
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 
-from verimorph.config import DATA_DIR, SIH_METADATA
+from verimorph.config import DATA_DIR, PLATFORM_METADATA
 from verimorph.ingestion import parse_text
 from verimorph.brief import generate_content_brief
 from verimorph.generators import generate_all_formats
@@ -26,9 +26,8 @@ from verimorph.ledger import ProvenanceLedger, generate_audit_certificate
 
 def main():
     print("=" * 80)
-    print(f"🛡️  VERIMORPH: {SIH_METADATA['tagline']}")
-    print(f"🏆  Smart India Hackathon 2026 | PS ID: {SIH_METADATA['problem_statement_id']}")
-    print(f"👥  Team: {SIH_METADATA['team_name']} (ID: {SIH_METADATA['team_id']})")
+    print(f"🛡️  VERIMORPH: {PLATFORM_METADATA['tagline']}")
+    print(f"🏢  Platform ID: {PLATFORM_METADATA['platform_id']} • {PLATFORM_METADATA['category']}")
     print("=" * 80)
 
     # 1. Load Sample CERT-In Advisory
@@ -91,13 +90,13 @@ def main():
     print(f"  ✓ Ledger Integrity Status: {msg}")
 
     # Generate Audit Certificate
-    cert = generate_audit_certificate(block, SIH_METADATA)
+    cert = generate_audit_certificate(block, PLATFORM_METADATA)
     print(f"  ✓ Audit Certificate Created: {cert['certificate_id']}")
 
     print("\n" + "=" * 80)
-    print("🎯  DEMONSTRATION COMPLETE: Single Source transformed into 7 Audited Channels!")
+    print("🎯  PIPELINE VERIFICATION COMPLETE: Single Source transformed into 7 Audited Channels!")
     print("    To launch the interactive dashboard, run:")
-    print("    python -m uvicorn verimorph.web.app:app --reload --port 8000")
+    print("    python run_app.py")
     print("=" * 80)
 
 if __name__ == "__main__":
